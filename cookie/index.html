@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <pre id="cookie"></pre>
+    <script>
+    const rawCookie = document.cookie;
+    const cookieArr= rawCookie.split(';');
+    let cookieObj = {};
+    for (const el of cookieArr) {
+    	const singleCookie = el.split('=');
+        cookieObj[singleCookie[0]] = singleCookie[1];
+    };
+    const jsonCookie = JSON.stringify(cookieObj, null, 4);
+    document.getElementById('cookie').innerHTML = jsonCookie;
+    </script>
+  </body>
+</html> 
