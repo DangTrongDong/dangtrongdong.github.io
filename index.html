@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Wave Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #waveform {
+            width: 80%;
+            height: 200px;
+            background-color: #eee;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div id="waveform"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const analyser = audioContext.createAnalyser();
+            const waveform = document.getElementById('waveform');
+            
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then((stream) => {
+                    const source = audioContext.createMediaStreamSource(stream);
+                    source.connect(analyser);
+                    analyser.connect(audioContext.destination);
+                    visualize();
+                })
+                .catch((error) => {
+                    console.error('Error accessing microphone:', error);
+                });
+
+            function visualize() {
+                analyser.fftSize = 256;
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                waveform.appendChild(canvas);
+                
+                canvas.width = waveform.clientWidth;
+                canvas.height = waveform.clientHeight;
+
+                function draw() {
+                    analyser.getByteTimeDomainData(dataArray);
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#3498db';
+                    ctx.beginPath();
+
+                    const sliceWidth = canvas.width / bufferLength;
+                    let x = 0;
+
+                    for (let i = 0; i < bufferLength; i++) {
+                        const v = dataArray[i] / 128.0;
+                        const y = (v * canvas.height) / 2;
+
+                        if (i === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+
+                        x += sliceWidth;
+                    }
+
+                    ctx.lineTo(canvas.width, canvas.height / 2);
+                    ctx.stroke();
+
+                    requestAnimationFrame(draw);
+                }
+
+                draw();
+            }
+        });
+    </script>
+</body>
+</html>
