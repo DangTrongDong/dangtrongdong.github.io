@@ -3,84 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dang Trong Dong</title>
+    <title>Static Pinball Game</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background: url('https://imgur.com/oBYKcKK.jpg') center/cover no-repeat fixed;
-            font-family: 'Arial', sans-serif;
-            color: #fff;
-            text-align: center;
+            overflow: hidden;
         }
 
-        header {
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        section {
-            padding: 20px;
-        }
-
-        #facebook-button, #gmail-button {
-            background-color: #4267B2;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 18px;
-            margin: 10px;
-        }
-
-        #facebook-button:hover {
-            background-color: #3b5998;
-        }
-
-        #gmail-button {
-            background-color: #4285F4;
-        }
-
-        #gmail-button:hover {
-            background-color: #3b5998;
-        }
-
-        .icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 5px;
-            vertical-align: middle;
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
+    <canvas id="pinballCanvas" width="800" height="600"></canvas>
 
-    <header>
-        <h1>Dang Trong Dong</h1>
-        <p>Welcome to my profile</p>
-    </header>
+    <script>
+        const canvas = document.getElementById("pinballCanvas");
+        const ctx = canvas.getContext("2d");
 
-    <section>
-        <h2>About Me</h2>
-        <p>
-            I am a 15-year-old student interested in Node.js and Bash scripting. 
-            I have one year of experience with Node.js, and I've been using Linux for two years.
-        </p>
-    </section>
+        const ball = {
+            x: canvas.width / 2,
+            y: canvas.height - 30,
+            radius: 10,
+            dx: 2,
+            dy: -2
+        };
 
-    <section>
-        <h2>Contact Information</h2>
-        <a id="facebook-button" href="https://web.facebook.com/profile.php?id=61555017285411" target="_blank">
-            <img class="icon" src="https://media.designrush.com/inspiration_images/280757/conversions/facebook_logo_3abea1f9806e-desktop.jpg" alt="Facebook Icon">
-            Facebook Profile
-        </a>
-        
-        <a id="gmail-button" href="mailto:dangtrongdong08@gmail.com">
-            <img class="icon" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="Gmail Icon">
-            dangtrongdong08@gmail.com
-        </a>
-    </section>
+        const paddleHeight = 10;
+        const paddleWidth = 100;
+        let paddleX = (canvas.width - paddleWidth) / 2;
 
+        const obstacleWidth = 60;
+        const obstacleHeight = 20;
+        const obstacles = [
+            { x: 50, y: 100 },
+            { x: 200, y: 150 },
+            { x: 350, y: 100 },
+            { x: 500, y: 150 },
+            { x: 650, y: 100 }
+        ];
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawObstacles() {
+            obstacles.forEach(obstacle => {
+                ctx.beginPath();
+                ctx.rect(obstacle.x, obstacle.y, obstacleWidth, obstacleHeight);
+                ctx.fillStyle = "#0095DD";
+                ctx.fill();
+                ctx.closePath();
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawBall();
+            drawPaddle();
+            drawObstacles();
+
+            // Update ball position
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Bounce off walls
+            if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
+                ball.dx = -ball.dx;
+            }
+
+            if (ball.y + ball.dy < ball.radius) {
+                ball.dy = -ball.dy;
+            }
+
+            // Bounce off paddle
+            if (
+                ball.y + ball.dy > canvas.height - paddleHeight - ball.radius &&
+                ball.x > paddleX &&
+                ball.x < paddleX + paddleWidth
+            ) {
+                ball.dy = -ball.dy;
+            }
+
+            // Bounce off obstacles
+            obstacles.forEach(obstacle => {
+                if (
+                    ball.x > obstacle.x &&
+                    ball.x < obstacle.x + obstacleWidth &&
+                    ball.y + ball.dy > obstacle.y &&
+                    ball.y + ball.dy < obstacle.y + obstacleHeight
+                ) {
+                    ball.dy = -ball.dy;
+                }
+            });
+
+            // Reset ball position if it hits the bottom
+            if (ball.y + ball.dy > canvas.height - ball.radius) {
+                ball.x = canvas.width / 2;
+                ball.y = canvas.height - 30;
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        document.addEventListener("keydown", function (event) {
+            // Move the paddle left
+            if (event.key === "ArrowLeft" && paddleX > 0) {
+                paddleX -= 20;
+            }
+
+            // Move the paddle right
+            if (event.key === "ArrowRight" && paddleX < canvas.width - paddleWidth) {
+                paddleX += 20;
+            }
+        });
+
+        draw();  // Start the game loop
+    </script>
 </body>
 </html>
