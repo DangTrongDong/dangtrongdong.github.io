@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Some small thing about regex I studied</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Some small thing about regex I studied" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://dangtrongdong.github.io/regex/" />
+<meta property="og:url" content="https://dangtrongdong.github.io/regex/" />
+<meta property="og:site_name" content="dangtrongdong.github.io" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Some small thing about regex I studied" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Nothing but my simple website","headline":"Some small thing about regex I studied","url":"https://dangtrongdong.github.io/regex/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1 id="some-small-thing-about-regex-i-studied">Some small thing about regex I studied</h1>
+
+<ul>
+  <li>Metacharacters
+    <ul>
+      <li>Period character <code class="language-plaintext highlighter-rouge">.</code>: match <strong>any</strong> character</li>
+      <li>Caret sign <code class="language-plaintext highlighter-rouge">^</code>: causes the match to occur only if the regular expression is
+  found at the <strong>beginning</strong> of the line</li>
+      <li>Dollar sign <code class="language-plaintext highlighter-rouge">$</code>: causes the match to occur only if the regular expression is
+  found at the <strong>end</strong> of the line</li>
+      <li>Alternation <code class="language-plaintext highlighter-rouge">a|b</code>: match <strong>either the string a or the string b</strong> and not limited to 2 choices</li>
+      <li>Quantifiers
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">?</code>: match an element <strong>zero</strong> or <strong>one</strong> time</li>
+          <li><code class="language-plaintext highlighter-rouge">*</code>: match an element <strong>zero</strong> or <strong>more</strong> times</li>
+          <li><code class="language-plaintext highlighter-rouge">+</code>: match an element <strong>one</strong> or <strong>more</strong> times</li>
+          <li><code class="language-plaintext highlighter-rouge">{x}</code>: match an element <strong>exactly x</strong> time(s)</li>
+          <li><code class="language-plaintext highlighter-rouge">{x,y}</code>: match an element <strong>x to y</strong> times</li>
+          <li><code class="language-plaintext highlighter-rouge">{x,}</code>: match an element <strong>x or more</strong> times</li>
+          <li><code class="language-plaintext highlighter-rouge">{,y}</code>: match an element <strong>y or fewer</strong> times</li>
+        </ul>
+      </li>
+      <li>Bracket <code class="language-plaintext highlighter-rouge">[abc]</code>: matches <strong>a single character</strong> from <strong>a specified set of characters</strong>
+        <ul>
+          <li>In bracket, metacharacters lose their special meaning, but there are two cases in which metacharacters are used within bracket expressions and have different meanings
+            <ul>
+              <li>Negation <code class="language-plaintext highlighter-rouge">^</code> : opposed to normal bracket, it <strong>wont</strong> match a single character from a specified set of characters</li>
+              <li>Dash <code class="language-plaintext highlighter-rouge">-</code>: indicate a character range like <code class="language-plaintext highlighter-rouge">a-z</code>, <code class="language-plaintext highlighter-rouge">A-Z</code>, <code class="language-plaintext highlighter-rouge">0-9</code></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Character classes
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">[:alnum:]</code>: the alphanumeric characters, equivalent to <code class="language-plaintext highlighter-rouge">[A-Za-z0-9]</code></li>
+      <li><code class="language-plaintext highlighter-rouge">[:word:]</code>: <code class="language-plaintext highlighter-rouge">[:alnum:]</code> with the addition of the underscore character <code class="language-plaintext highlighter-rouge">_</code></li>
+      <li><code class="language-plaintext highlighter-rouge">[:blank:]</code>: the space and tab characters</li>
+      <li><code class="language-plaintext highlighter-rouge">[:alpha:]</code>: the alphabetic characters, equivalent to <code class="language-plaintext highlighter-rouge">[A-Za-z]</code></li>
+      <li><code class="language-plaintext highlighter-rouge">[:cntrl:]</code>: the ASCII control codes including the ASCII characters 0 through 31 and 127</li>
+      <li><code class="language-plaintext highlighter-rouge">[:digit:]</code>: equivalent to <code class="language-plaintext highlighter-rouge">[0-9]</code></li>
+      <li><code class="language-plaintext highlighter-rouge">[:graph:]</code>: the visible characters including characters 33 through 126</li>
+      <li><code class="language-plaintext highlighter-rouge">[:punct:]</code>: the punctuation characters, equivalent to <code class="language-plaintext highlighter-rouge">[-!"#$%&amp;'()*+,./:;&lt;=&gt;?@[\\\]_{|}~]\</code></li>
+      <li><code class="language-plaintext highlighter-rouge">[:space:]</code>: equivalent to <code class="language-plaintext highlighter-rouge">[ \t\r\n\v\f]</code></li>
+      <li><code class="language-plaintext highlighter-rouge">[:xdigit:]</code>: characters used to express hexadecimal numbers, equivalent to <code class="language-plaintext highlighter-rouge">[0-9A-Fa-f]</code></li>
+      <li><code class="language-plaintext highlighter-rouge">[:print:]</code>: printable characters, including all characters in <code class="language-plaintext highlighter-rouge">[:graph:]</code> plus the space character</li>
+      <li><code class="language-plaintext highlighter-rouge">[:lower:]</code>: equivalent to <code class="language-plaintext highlighter-rouge">[a-z]</code></li>
+      <li><code class="language-plaintext highlighter-rouge">[:upper:]</code>: equivalent to <code class="language-plaintext highlighter-rouge">[A-Z]</code></li>
+    </ul>
+  </li>
+</ul>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
