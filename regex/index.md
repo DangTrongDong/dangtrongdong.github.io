@@ -1,9 +1,5 @@
 # Some small thing about regex I studied
 
-## author: Dang Trong Dong
-## last modified time: 21:34:49 22/1/2024
-
-
 - Metacharacters
 	- Period character `.`: match **any** character
 	- Caret sign `^`: causes the match to occur only if the regular expression is
@@ -25,14 +21,14 @@
 			- Dash `-`: indicate a character range like `a-z`, `A-Z`, `0-9`
 
 - Character classes
-	- `[:alnum:]`: the alphanumeric characters, equivalent to [A-Za-z0-9]
+	- `[:alnum:]`: the alphanumeric characters, equivalent to `[A-Za-z0-9]`
 	- `[:word:]`: `[:alnum:]` with the addition of the underscore character `_`
 	- `[:blank:]`: the space and tab characters
 	- `[:alpha:]`: the alphabetic characters, equivalent to `[A-Za-z]`
 	- `[:cntrl:]`: the ASCII control codes including the ASCII characters 0 through 31 and 127
 	- `[:digit:]`: equivalent to `[0-9]`
 	- `[:graph:]`: the visible characters including characters 33 through 126
-	- `[:punct:]`: the punctuation characters, equivalent to `[-!"#$%&'()*+,./:;<=>?@[\\\]_{|}~]`
+	- `[:punct:]`: the punctuation characters, equivalent to `[-!"#$%&'()*+,./:;<=>?@[\\\]_{|}~]\`
 	- `[:space:]`: equivalent to `[ \t\r\n\v\f]`
 	- `[:xdigit:]`: characters used to express hexadecimal numbers, equivalent to `[0-9A-Fa-f]`
 	- `[:print:]`: printable characters, including all characters in `[:graph:]` plus the space character
